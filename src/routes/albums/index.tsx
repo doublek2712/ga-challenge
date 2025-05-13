@@ -4,6 +4,9 @@ import { DEFAULT_ALBUMS_CURRENT_PAGE, DEFAULT_ALBUMS_PAGE_SIZE } from '../../lib
 
 export const Route = createFileRoute('/albums/')({
   beforeLoad: async ({ search }) => {
+
+    document.title = 'Albums'
+
     const hasParams = 'pageSize' in search && 'currentPage' in search;
     if (!hasParams) {
       throw redirect({

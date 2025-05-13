@@ -1,13 +1,12 @@
-import { Link, useCanGoBack, useParams, useRouter } from "@tanstack/react-router"
-import type { FC } from "react"
+import { useParams, useRouter } from "@tanstack/react-router"
 import { Button } from "../components/button"
 import { ChevronLeft } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { AlbumsService } from "../services/albums/api"
 import { UsersService } from "../services/users/api"
-import { AVATAR_URL } from "../services/base"
 import { PhotosViewer } from "../components/photos-viewer"
 import { PhotosService } from "../services/photos/api"
+import { UserCard } from "../components/user-card"
 
 
 export const AlbumDetailPage = () => {
@@ -41,23 +40,19 @@ export const AlbumDetailPage = () => {
   else
     return (
       <div>
-        <div>
+        <div className="flex items-center gap-4">
           <Button onClick={() => router.history.back()}>
             <ChevronLeft />
           </Button>
-          <h1>Show album</h1>
+          <h1 className="text-xl font-medium">Show album</h1>
         </div>
-        <div>
-          <div>
-            <img src={AVATAR_URL + userQuery.data.name} alt={userQuery.data.name} />
-            <div>
-              <Link to="/users/$id" params={{ id: userQuery.data.id.toString() }}>
-                {userQuery.data.name}
-              </Link>
-              <a href={`mailto:${userQuery.data.email}`}>{userQuery.data.email}</a>
+        <div className="mt-4 px-6 py-4 rounded-xl bg-white">
+          <UserCard user={userQuery.data} />
+          <div className="p-4 border-t border-gray-200">
+            <div className="mb-4 flex justify-between">
+              <h2 className="text-lg font-medium">{albumQuery.data.title}</h2>
+              <span className="text-sm text-gray-600">Total: {photosQuery.data?.length}</span>
             </div>
-          </div>
-          <div>
             {!photosQuery.isPending && <PhotosViewer photos={photosQuery.data || []} />}
           </div>
         </div>

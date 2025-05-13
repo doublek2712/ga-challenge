@@ -28,11 +28,11 @@ export const UsersPage = () => {
           data={usersQuery.data?.map((item) => {
             return {
               id: item.id,
-              avatar: <img src={AVATAR_URL + item.name} alt={item.name} />,
+              avatar: <img className='w-8 h-8' src={AVATAR_URL + item.name} alt={item.name} />,
               name: item.name,
-              email: <a href={`mailto:${item.email}`}>{item.email}</a>,
-              phone: <a href={`tel:${item.phone}`}>{item.phone}</a>,
-              website: <a href={`https://${item.website}`} target='_blank'>{item.website}</a>,
+              email: <a className='text-blue-500' href={`mailto:${item.email}`}>{item.email}</a>,
+              phone: <a className='text-blue-500' href={`tel:${item.phone}`}>{item.phone}</a>,
+              website: <a className='text-blue-500' href={`https://${item.website}`} target='_blank'>{item.website}</a>,
               actions: (
                 <Button
                   onClick={() => navigate({ to: `/users/${item.id}` })}

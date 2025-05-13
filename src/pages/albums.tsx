@@ -29,7 +29,6 @@ export const AlbumsPage = () => {
         seen.add(item.userId)
         return true
       }).map((item) => item.userId)
-      console.log('unique', unique)
       return UsersService.getUsers(unique)
     },
     enabled: albumsQuery.data !== undefined,
@@ -43,31 +42,36 @@ export const AlbumsPage = () => {
   }
   else
     return (
-      <div>
-        <Table
-          headers={['ID', 'Title', 'User', 'Actions']}
-          data={albumsQuery.data?.map((item) => {
-            const user = usersQuery.data?.find(user => user.id === item.userId)
-            return {
-              id: item.id,
-              title: item.title,
-              user: user ? (
-                <Link to="/users/$id" params={{ id: user.id.toString() }}>
-                  <img src={AVATAR_URL + user.name} alt={user.name} />
-                  <span>{user.name}</span>
-                </Link>
-              ) : 'Unknown',
-              actions: (
-                <Button
-                  onClick={() => navigate({ to: `/albums/${item.id}` })}
-                >
-                  <EyeIcon />
-                  Show
-                </Button>
-              ),
-            }
-          })}
-        />
+      <div className='flex flex-col gap-2 items-center'>
+        <div className='w-full'>
+          <Table
+            headers={['ID', 'Title', 'User', 'Actions']}
+            data={albumsQuery.data?.map((item) => {
+              const user = usersQuery.data?.find(user => user.id === item.userId)
+              return {
+                id: item.id,
+                title: item.title,
+                user: user ? (
+                  <Link
+                    className='flex items-center gap-2'
+                    to="/users/$id"
+                    params={{ id: user.id.toString() }}>
+                    <img className='w-8 h-8' src={AVATAR_URL + user.name} alt={user.name} />
+                    <span>{user.name}</span>
+                  </Link>
+                ) : 'Unknown',
+                actions: (
+                  <Button
+                    onClick={() => navigate({ to: `/albums/${item.id}` })}
+                  >
+                    <EyeIcon />
+                    Show
+                  </Button>
+                ),
+              }
+            })}
+          />
+        </div>
         <Pagination
           pageSize={routeSearch.pageSize}
           currentPage={routeSearch.currentPage}
@@ -82,11 +86,12 @@ export const AlbumsPage = () => {
             })
           }}
           onPageSizeChange={(pageSize) => {
+            const adjustedPage = Math.min(Math.ceil(FAKE_ALBUMS_TOTAL_COUNT / pageSize), routeSearch.currentPage)
             navigate({
               to: '/albums',
               search: {
                 pageSize: pageSize,
-                currentPage: routeSearch.currentPage,
+                currentPage: adjustedPage,
               },
             })
           }}

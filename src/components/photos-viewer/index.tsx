@@ -1,6 +1,6 @@
 import Viewer from 'viewerjs';
 import 'viewerjs/dist/viewer.css';
-import { useEffect, useRef, type FC } from 'react';
+import { useRef, type FC } from 'react';
 import type { PhotoType } from '../../services/photos/type';
 
 interface IPhotosViewer {
@@ -32,14 +32,14 @@ export const PhotosViewer: FC<IPhotosViewer> = ({ photos }) => {
   }
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className='flex flex-wrap gap-2'>
       {photos.map((photo, index) => (
-        <div key={index} className='relative group ' onClick={() => handleClick(index)}>
+        <div key={index} className='relative group w-36' onClick={() => handleClick(index)}>
           <img
             src={photo.thumbnailUrl}
             alt={photo.title}
           />
-          <div className='hidden absolute top-0 left-0 w-full h-full bg-black opacity-50 group-hover:flex group-hover:cursor-pointer 
+          <div className='hidden absolute top-0 left-0 w-full h-full bg-black/50 group-hover:flex group-hover:cursor-pointer 
           items-center justify-center text-white'>
             Preview
           </div>

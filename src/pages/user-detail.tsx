@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link, useCanGoBack, useNavigate, useParams, useRouter } from '@tanstack/react-router'
+import { useNavigate, useParams, useRouter } from '@tanstack/react-router'
 import { AlbumsService } from '../services/albums/api'
 import { UsersService } from '../services/users/api'
 import { Button } from '../components/button'
 import { ChevronLeft, EyeIcon } from 'lucide-react'
-import { AVATAR_URL } from '../services/base'
 import { Table } from '../components/table'
+import { UserCard } from '../components/user-card'
 
 export const UserDetail = () => {
   const { id } = useParams({ strict: false })
@@ -33,22 +33,14 @@ export const UserDetail = () => {
   else
     return (
       <div>
-        <div>
+        <div className="flex items-center gap-4">
           <Button onClick={() => router.history.back()}>
             <ChevronLeft />
           </Button>
-          <h1>Show album</h1>
+          <h1 className="text-xl font-medium">Show user</h1>
         </div>
-        <div>
-          <div>
-            <img src={AVATAR_URL + userQuery.data.name} alt={userQuery.data.name} />
-            <div>
-              <Link to="/users/$id" params={{ id: userQuery.data.id.toString() }}>
-                {userQuery.data.name}
-              </Link>
-              <a href={`mailto:${userQuery.data.email}`}>{userQuery.data.email}</a>
-            </div>
-          </div>
+        <div className="mt-4 px-6 py-4 rounded-xl bg-white">
+          <UserCard user={userQuery.data} />
           <div>
             <Table
               headers={['ID', 'Title', 'Actions']}
