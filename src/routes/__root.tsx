@@ -1,5 +1,5 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
-import { Header } from '../components/header/header'
+import { Header } from '../components/header'
 
 const mainNavigations = [
   { to: '/albums', label: 'Albums' },

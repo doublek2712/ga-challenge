@@ -1,0 +1,3 @@
+export const DEFAULT_ALBUMS_PAGE_SIZE = 20
+export const DEFAULT_ALBUMS_CURRENT_PAGE = 1
+export const FAKE_ALBUMS_TOTAL_COUNT = 100

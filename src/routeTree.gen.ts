@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as AlbumsIndexImport } from './routes/albums/index'
+import { Route as UsersIdIndexImport } from './routes/users/$id/index'
+import { Route as AlbumsIdIndexImport } from './routes/albums/$id/index'
 
 // Create/Update Routes
 
@@ -22,9 +25,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const UsersIndexRoute = UsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AlbumsIndexRoute = AlbumsIndexImport.update({
   id: '/albums/',
   path: '/albums/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersIdIndexRoute = UsersIdIndexImport.update({
+  id: '/users/$id/',
+  path: '/users/$id/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AlbumsIdIndexRoute = AlbumsIdIndexImport.update({
+  id: '/albums/$id/',
+  path: '/albums/$id/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +67,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlbumsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/albums/$id/': {
+      id: '/albums/$id/'
+      path: '/albums/$id'
+      fullPath: '/albums/$id'
+      preLoaderRoute: typeof AlbumsIdIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/$id/': {
+      id: '/users/$id/'
+      path: '/users/$id'
+      fullPath: '/users/$id'
+      preLoaderRoute: typeof UsersIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +96,51 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/albums': typeof AlbumsIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/albums/$id': typeof AlbumsIdIndexRoute
+  '/users/$id': typeof UsersIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/albums': typeof AlbumsIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/albums/$id': typeof AlbumsIdIndexRoute
+  '/users/$id': typeof UsersIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/albums/': typeof AlbumsIndexRoute
+  '/users/': typeof UsersIndexRoute
+  '/albums/$id/': typeof AlbumsIdIndexRoute
+  '/users/$id/': typeof UsersIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/albums'
+  fullPaths: '/' | '/albums' | '/users' | '/albums/$id' | '/users/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/albums'
-  id: '__root__' | '/' | '/albums/'
+  to: '/' | '/albums' | '/users' | '/albums/$id' | '/users/$id'
+  id: '__root__' | '/' | '/albums/' | '/users/' | '/albums/$id/' | '/users/$id/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AlbumsIndexRoute: typeof AlbumsIndexRoute
+  UsersIndexRoute: typeof UsersIndexRoute
+  AlbumsIdIndexRoute: typeof AlbumsIdIndexRoute
+  UsersIdIndexRoute: typeof UsersIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AlbumsIndexRoute: AlbumsIndexRoute,
+  UsersIndexRoute: UsersIndexRoute,
+  AlbumsIdIndexRoute: AlbumsIdIndexRoute,
+  UsersIdIndexRoute: UsersIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +154,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/albums/"
+        "/albums/",
+        "/users/",
+        "/albums/$id/",
+        "/users/$id/"
       ]
     },
     "/": {
@@ -105,6 +165,15 @@ export const routeTree = rootRoute
     },
     "/albums/": {
       "filePath": "albums/index.tsx"
+    },
+    "/users/": {
+      "filePath": "users/index.tsx"
+    },
+    "/albums/$id/": {
+      "filePath": "albums/$id/index.tsx"
+    },
+    "/users/$id/": {
+      "filePath": "users/$id/index.tsx"
     }
   }
 }

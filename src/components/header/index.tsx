@@ -1,13 +1,13 @@
 import { Link, type ToPathOption } from "@tanstack/react-router"
 import type { FC } from "react"
 
-interface HeaderProps {
+interface IHeaderProps {
   routes: {
     to: ToPathOption,
     label: string,
   }[]
 }
-export const Header: FC<HeaderProps> = ({ routes }) => {
+export const Header: FC<IHeaderProps> = ({ routes }) => {
   return (
     <header >
       <nav>
