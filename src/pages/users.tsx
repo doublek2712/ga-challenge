@@ -5,6 +5,7 @@ import { AVATAR_URL } from '../services/base'
 import { Button } from '../components/button'
 import { EyeIcon } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
+import { Spinner } from '../components/spinner'
 
 export const UsersPage = () => {
   const navigate = useNavigate()
@@ -15,7 +16,11 @@ export const UsersPage = () => {
   })
 
   if (usersQuery.isPending) {
-    return <div>Loading...</div>
+    return (
+      <div className='flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
   }
   else if (usersQuery.isError) {
     return <div>Error</div>

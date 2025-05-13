@@ -7,6 +7,7 @@ import { UsersService } from "../services/users/api"
 import { PhotosViewer } from "../components/photos-viewer"
 import { PhotosService } from "../services/photos/api"
 import { UserCard } from "../components/user-card"
+import { Spinner } from "../components/spinner"
 
 
 export const AlbumDetailPage = () => {
@@ -32,7 +33,11 @@ export const AlbumDetailPage = () => {
   })
 
   if (albumQuery.isPending || userQuery.isPending) {
-    return <div>Loading...</div>
+    return (
+      <div className='flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
   }
   else if (albumQuery.isError || userQuery.isError) {
     return <div>Error</div>

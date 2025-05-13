@@ -6,6 +6,7 @@ import { Button } from '../components/button'
 import { ChevronLeft, EyeIcon } from 'lucide-react'
 import { Table } from '../components/table'
 import { UserCard } from '../components/user-card'
+import { Spinner } from '../components/spinner'
 
 export const UserDetail = () => {
   const { id } = useParams({ strict: false })
@@ -25,7 +26,11 @@ export const UserDetail = () => {
   })
 
   if (albumsQuery.isPending || userQuery.isPending) {
-    return <div>Loading...</div>
+    return (
+      <div className='flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
   }
   else if (albumsQuery.isError || userQuery.isError) {
     return <div>Error</div>

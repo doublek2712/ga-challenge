@@ -8,6 +8,7 @@ import { Pagination } from '../components/pagination'
 import { EyeIcon } from 'lucide-react'
 import { Button } from '../components/button'
 import { AVATAR_URL } from '../services/base'
+import { Spinner } from '../components/spinner'
 
 const routeApi = getRouteApi('/albums/')
 type RouteSearch = { pageSize: number, currentPage: number }
@@ -35,7 +36,11 @@ export const AlbumsPage = () => {
   })
 
   if (albumsQuery.isPending) {
-    return <div>Loading...</div>
+    return (
+      <div className='flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
   }
   else if (albumsQuery.isError || usersQuery.isError) {
     return <div>Error</div>
