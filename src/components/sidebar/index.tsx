@@ -5,7 +5,6 @@ import logo from '../../assets/logo.png'
 import type React from "react"
 import './styles.css'
 import { MenuIcon } from "lucide-react"
-import { Spinner } from "../spinner"
 
 interface ISidebarProps {
   routes: {
